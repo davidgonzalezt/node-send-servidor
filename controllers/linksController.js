@@ -55,5 +55,15 @@ exports.newLink = async (req, res, next) => {
 // get links
 
 exports.getFile = async (req, res, next) => {
+  const { url } = req.params
+  console.log(req.params)
+  // verify link exist
+  const link = await Link.findOne({ url })
+  
+  if (!link) {
+    res.status(404).json({ message: 'no se encontro' })
+    return next()
+  }
 
+  res.status(200).json({ file: link.name })
 }
