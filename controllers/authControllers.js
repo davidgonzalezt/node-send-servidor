@@ -36,7 +36,7 @@ exports.authenticateUser = async (req, res, next) => {
 
     res.json({ token })
   } else {
-    res.status(400).json({ msg: 'Invalid Password' })
+    res.status(400).json({ msg: 'Contraseña invalida' })
   }
 
 }
