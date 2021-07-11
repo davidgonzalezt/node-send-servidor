@@ -20,7 +20,7 @@ exports.authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-    res.status(401).json({msg: 'user does not exist'})
+    res.status(401).json({msg: 'El usuario no existe'})
     return next();
   }
 
