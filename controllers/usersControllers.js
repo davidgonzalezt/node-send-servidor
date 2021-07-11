@@ -12,7 +12,7 @@ exports.newUser = async (req, res) => {
 
   // verify if user exist
   const { email, password } = req.body
-
+  try {
   let user = await User.findOne({ email });
 
   if (user) {
@@ -25,10 +25,10 @@ exports.newUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt)
 
-    try {
+    
       //save user
       await user.save()
-      res.json({msg: 'User was created'})
+      res.json({msg: 'Usuario Creado Correctamente'})
     } catch (error) {
       console.log(error)
     }
