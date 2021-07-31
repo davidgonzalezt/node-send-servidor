@@ -83,3 +83,14 @@ exports.getFile = async (req, res, next) => {
     await link.save()
   }
 }
+
+
+exports.allLinks = async (req, res, next) => {
+  try {
+    const links = await Link.find({}).select('url-_id');
+    res.json({ links })
+
+  } catch (error) {
+    console.log(error)
+  }
+}
