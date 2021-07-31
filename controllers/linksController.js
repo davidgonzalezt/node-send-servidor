@@ -12,11 +12,11 @@ exports.newLink = async (req, res, next) => {
     return
   }
   // create link properties
-  const { original_name } = req.body
+  const { original_name, name } = req.body
   const link = new Link()
 
   link.url = shortid.generate()
-  link.name = shortid.generate()
+  link.name = name
   link.original_name = original_name
 
   if (req.user) {
