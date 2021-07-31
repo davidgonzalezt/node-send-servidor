@@ -54,7 +54,7 @@ exports.newLink = async (req, res, next) => {
 
 // get links
 
-exports.getFile = async (req, res, next) => {
+exports.getLink= async (req, res, next) => {
   const { url } = req.params
 
   // verify link exist
@@ -66,28 +66,13 @@ exports.getFile = async (req, res, next) => {
   }
 
   res.status(200).json({ file: link.name })
-
-  // if downloads is 1 - delet from database
-  const { downloads, name } = link
-  if (downloads === 1) {
-    // delet file
-    req.file = name 
-    next()
-    //delet document in the DB
-    await Link.findOneAndRemove({ url })
-    
-    // console.log("if only one")
-  } else {
-    // if downloads > 1 - subtract one to downloads
-    link.downloads --;
-    await link.save()
-  }
+  next()
 }
 
 
 exports.allLinks = async (req, res, next) => {
   try {
-    const links = await Link.find({}).select('url-_id');
+    const links = await Link.find({}).select('url');
     res.json({ links })
 
   } catch (error) {
