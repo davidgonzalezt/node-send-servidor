@@ -24,8 +24,8 @@ exports.uploadNewFile = async (req, res, next) => {
   upload(req, res, async error => {
     console.log(req.file);
 
-    if(!error) {
-      res.json({ file: req.file.fileName })
+    if(!error) {    
+      res.json({ file: req.file.filename })
 
     } else {
       console.log(error);
