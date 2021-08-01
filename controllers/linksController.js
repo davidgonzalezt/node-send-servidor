@@ -65,7 +65,7 @@ exports.getLink= async (req, res, next) => {
     return next()
   }
 
-  res.status(200).json({ file: link.name })
+  res.status(200).json({ file: link.name, password: false })
   next()
 }
 
@@ -77,5 +77,36 @@ exports.allLinks = async (req, res, next) => {
 
   } catch (error) {
     console.log(error)
+  }
+}
+
+exports.hasPassword = async (req, res, next) => {
+  const { url } = req.params
+  console.log(url)
+  // verify link exist
+  const link = await Link.findOne({ url })
+  
+  if (!link) {
+    res.status(404).json({ message: 'no se encontro' })
+    return next()
+  }
+
+  if (link.password) {
+    return  res.json({ password: true, link: link.url })
+  }
+
+  next()
+}
+
+exports.verifyPassword = async(req, res, next) => {
+  const { url } = req.params
+  const { password } = req.body
+
+  const link = await Link.findOne( { url } )
+
+  if (bcrypt.compareSync(password, link.password)) {
+    next()
+  } else {
+    res.status(401).json({ msg: "contraseña incorrecta" })
   }
 }

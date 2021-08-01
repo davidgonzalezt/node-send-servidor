@@ -18,6 +18,11 @@ router.get('/',
 );
 
 router.get('/:url',
+  linksController.hasPassword,
+  linksController.getLink,
+);
+router.post('/:url',
+  linksController.verifyPassword,
   linksController.getLink,
 );
 
